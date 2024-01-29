@@ -1,38 +1,94 @@
 <!DOCTYPE html>
-<html xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout3}">
-
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout3}">
+    
 <th:block layout:fragment="content">
+	 <style type="text/css">
+		.body-main { max-width: 800px; }
+	
+		.loginTF {
+			width: 100%;
+			padding: 13px 5px 13px 5px;
+			padding-left: 15px;
+			border:1px solid #999;
+			color:#333;
+			margin-top:5px; margin-bottom:5px;
+			font-size:14px;
+			border-radius:4px;
+			vertical-align: baseline;
+		}
+	</style>
+	
+	<script type="text/javascript">
+	function sendLogin() {
+	    var f = document.loginForm;
+	
+		var str = f.userId.value;
+	    if(!str) {
+	        alert("아이디를 입력하세요. ");
+	        f.userId.focus();
+	        return;
+	    }
+	
+	    str = f.userPwd.value;
+	    if(!str) {
+	        alert("패스워드를 입력하세요. ");
+	        f.userPwd.focus();
+	        return;
+	    }
+	
+	    f.action = "[[@{/member/login}]]";
+	    f.submit();
+	}
+	</script>
+   
 	<div class="body-container">
-		<div class="body-title">
-			<h3><i class="fas fa-chalkboard"></i> 로그인 </h3>
-		</div>
 		<div class="body-main">
-				<table>
-					<form name="loginForm" method="Post" th:action="@{/member/login}">
-						
-					
-						<tr>
-							<td>아이디</td>
-							<td><input type="text" name="userId" placeholder="아이디" value=""></td>
-						</tr>
-						<tr>
-							<td>비밀번호</td>
-							<td><input type="password" name="password" placeholder="비밀번호" value=""></td>
-						</tr>
-						<tr>
-							<td>
-								<button type="submit">로그인하기</button>
-							</td>
-							<td>
-								<button type="button" th:onclick="href.location='@{/member/member}'">가입하기</button>
-							</td>
-						</tr>
-					</form>
 
-				</table>
+			<div style="margin: 90px auto 60px; width:350px;">
+				<div style="text-align: center;">
+				<span style="font-weight: bold; font-size:27px; color: #424951;">로그인</span>
+				</div>
+			      
+				<form name="loginForm" method="post" action="">
+					<table style="margin: 15px auto; width: 100%; border-spacing: 0;">
+						<tr align="center" height="60"> 
+							<td> 
+								<input type="text" name="userId" id="userId" class="loginTF" maxlength="15"
+									tabindex="1" placeholder="아이디">
+							</td>
+						</tr>
+						<tr align="center" height="60"> 
+							<td>
+								<input type="password" name="userPwd" id="userPwd" class="loginTF" maxlength="20" 
+									tabindex="2" placeholder="패스워드"
+									autocomplete="off">
+							</td>
+						</tr>
+						<tr align="center" height="65" > 
+							<td>
+								<button type="button" onclick="sendLogin();" class="btn btn-primary" style="width: 100%; padding: 15px; font-weight: bold;">로그인</button>
+							</td>
+						</tr>
+						
+						<tr align="center" height="45">
+							<td>
+								<a th:href="@{/}">아이디찾기</a>&nbsp;&nbsp;&nbsp;
+								<a th:href="@{/}">패스워드찾기</a>&nbsp;&nbsp;&nbsp;
+								<a th:href="@{/}">회원가입</a>
+							</td>
+						</tr>
+						 
+						<tr align="center" height="40" >
+							<td><span style="color: blue;">[[${message}]]</span></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
 		</div>
 	</div>
 </th:block>
-
+    
 </html>

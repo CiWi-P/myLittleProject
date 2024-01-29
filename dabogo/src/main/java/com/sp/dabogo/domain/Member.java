@@ -1,6 +1,6 @@
 package com.sp.dabogo.domain;
 
-public class member {
+public class Member {
 	private long memberIdx;
 	private int membership;
 	private String userId;
@@ -23,11 +23,20 @@ public class member {
 	private int enabled;
 	
 	private String authority;
+	private String oldAuthority;
 	private long num;
 	private int stateCode;
 	private String memo;
 	private String registerId;
 	private String reg_date;
+	
+	
+	public String getOldAuthority() {
+		return oldAuthority;
+	}
+	public void setOldAuthority(String oldAuthority) {
+		this.oldAuthority = oldAuthority;
+	}
 	public long getMemberIdx() {
 		return memberIdx;
 	}

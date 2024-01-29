@@ -4,39 +4,204 @@
       layout:decorate="~{layout/layout3}">
     
 <th:block layout:fragment="content">
-	<div class="body-container">
-		<div class="body-title">
-			<h3><i class="fas fa-chalkboard"></i> 회원가입 </h3>
-		</div>
+	 <style type="text/css">
+		.body-main { max-width: 800px; }
+	
+		.table-form td { padding: 7px 0; }
+		.table-form tr:first-child { border-top: 2px solid #212529;  }
+		.table-form tr td:first-child{ background: #f8f8f8; text-align: center; width: 120px; font-weight: 500; }
+		.table-form tr td:nth-child(2) { text-align: left; padding-left: 10px; }
+		
+		.table-form input[type=text]:focus, .table-form input[type=date]:focus, .table-form input[type=password]:focus {
+			border: 1px solid #222; }
+		
+		.msg-box { text-align: center; color: blue; }
+	</style>
+	
+	<script type="text/javascript">
+		$(function(){
+			$(".help-block").hide();
+			
+			// <input>, <button>, <select>, <textarea> 요소
+			$("form[name=memberForm] :input").css("border", "1px solid #aaa");
+	
+			// <input> 만
+			$("form[name=memberForm] input").focus(function(){
+				$(this).css("border", "1px solid #212529");
+				$(this).siblings(".help-block").show();
+				// next() 는 형제중 span이 하나인 경우는 가능하지만 두개이상에서 두번째는 siblings()를 사용 해야함  
+				// $(this).next("span").show();
+			});
+	
+			$("form[name=memberForm] input").blur(function(){
+				$(this).css("border", "1px solid #aaaaaa");
+				$(this).siblings(".help-block").hide();
+			});
+			
+		});
+	
+		$(function(){
+			// 약관 동의
+			$("form input[name=terms]").click(function(){
+				let c = $(this).is(":checked");
+				if( c ) {
+					$(".btnSendOk").prop("disabled", false);
+				} else {
+					$(".btnSendOk").prop("disabled", true);
+				}
+			});
+		});
+		
+		function sendOk() {
+			const f = document.memberForm;
+			let str;
+
+			str = f.userId.value;
+			if( !/^[a-z][a-z0-9_]{4,9}$/i.test(str) ) { 
+				alert("아이디를 다시 입력 하세요. ");
+				f.userId.focus();
+				return;
+			}
+
+			str = f.userPwd.value;
+			if( !/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str) ) { 
+				alert("패스워드를 다시 입력 하세요. ");
+				f.userPwd.focus();
+				return;
+			}
+
+			if( str !== f.userPwd2.value ) {
+		        alert("패스워드가 일치하지 않습니다. ");
+		        f.userPwd.focus();
+		        return;
+			}
+			
+		    str = f.userName.value;
+		    if( !/^[가-힣]{2,5}$/.test(str) ) {
+		        alert("이름을 다시 입력하세요. ");
+		        f.userName.focus();
+		        return;
+		    }
+
+		    str = f.birth.value;
+		    if( !str ) {
+		        alert("생년월일를 입력하세요. ");
+		        f.birth.focus();
+		        return;
+		    }
 		    
+		    str = f.email.value.trim();
+		    if( !str ) {
+		        alert("이메일을 입력하세요. ");
+		        f.email.focus();
+		        return;
+		    }
+
+		    str = f.email.value.trim();
+		    if( !str ) {
+		        alert("이메일을 입력하세요. ");
+		        f.email.focus();
+		        return;
+		    }
+		    
+		    f.action = "[[@{/member/{mode}(mode=${mode})}]]";
+		    f.submit();
+		}
+	</script>
+   
+	<div class="body-container">
+	    <div class="body-title">
+	        <h3><i class="fa-solid fa-user-plus"></i> 회원가입 </h3>
+	    </div>
+	
 		<div class="body-main">
-		<form name="memberForm" method="Post" th:action="@{/member/member}">
-			
-			<table>
-				<tbody>
+
+			<form name="memberForm" method="post">
+				<table class="table table-border table-form">
 					<tr>
-						<td>아이디</td>
-						<td><input type="text" name="userId" placeholder="아이디" value=""></td>
+						<td>아&nbsp;이&nbsp;디</td>
+						<td>
+							<input type="text" name="userId" id="userId" class="form-control" maxlength="10" style="width: 50%;">
+							<span id="userIdState" style='display:none;'></span>
+							<span class="help-block">아이디는 5~10자 이내 입니다.</span>
+						</td>
 					</tr>
-					<tr>
-						<td>비밀번호</td>
-						<td><input type="password" name="password" placeholder="비밀번호" value=""></td>
-					</tr>
-					<tr>
-						<td>비밀번호 확인</td>
-						<td><input type="password" name="password2" placeholder="비밀번호" value=""></td>
-					</tr>
-					<tr>
-						<td>이름</td>
-						<td><input type="text" name="name" placeholder="이름" value=""></td>
-					</tr>
-			
 					
-				</tbody>
-			</table>
-		</form>
+					<tr>
+						<td>패스워드</td>
+						<td>
+							<input type="password" name="userPwd" class="form-control" maxlength="10" style="width: 50%;">
+							<span class="help-block">패스워드는 5~10자이내 입니다.</span>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>패스워드 확인</td>
+						<td >
+							<input type="password" name="userPwd2" class="form-control" maxlength="10" style="width: 50%;">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>이&nbsp;&nbsp;&nbsp;&nbsp;름</td>
+						<td>
+							<input type="text" name="userName" maxlength="20" class="form-control" style="width: 50%;">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>생년월일</td>
+						<td>
+							<input type="date" name="birth" maxlength="20" class="form-control" style="width: 50%;">
+							<span class="help-block">생년월일은 2000-10-10 형식으로 입력 합니다.</span>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>이 메 일</td>
+						<td>
+							<input type="text" name="email" maxlength="50" class="form-control" style="width: 50%;">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>전화번호</td>
+						<td>
+							<input type="text" name="tel" maxlength="15" class="form-control" style="width: 50%;">
+						</td>
+					</tr>
+					
+				</table>
+				
+				<table class="table">
+					<tr>
+						<td align="center">
+							<span>
+								<input type="checkbox" name="terms" value="1" class="form-check-input">
+							    약관에 동의하시겠습니까 ?
+							</span>
+							<span><a href="#">약관보기</a></span>
+						</td>
+					</tr>
+					
+					<tr>
+						<td align="center">
+						    <button type="button" class="btn btnSendOk" onclick="sendOk();" disabled> [[${mode=='member' ? '회원가입':'정보수정'}]] </button>
+						    <button type="reset" class="btn"> 다시입력 </button>
+						    <button type="button" class="btn" th:onclick="|location.href='@{/}'|">[[${mode=='member' ? '가입취소' : '수정취소'}]]</button>
+						</td>
+					</tr>
+					
+					<tr height="40">
+						<td align="center" colspan="2">
+							<span class="msg-box"></span>
+						</td>
+					</tr>
+				</table>
+			</form>
+
 		</div>
 	</div>
 </th:block>
-
+    
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout3}">
+    
+<th:block layout:fragment="content">
+	 <style type="text/css">
+		.body-main { max-width: 800px; }
+	
+		.info-continer { width: 500px; margin: 0 auto; padding: 70px 5px 40px; }
+		.info-title { width: 100%; padding: 10px 0 20px; text-align: center; }
+		.info-title h4 { font-weight: bold; font-size:27px; color: #424951; }
+		.info-main { width: 100%;
+			text-align: center;
+		    border: 1px solid #e7e7e7;
+		    box-shadow: 0 0 15px 0 rgb(2 59 109 / 10%);
+		    padding: 50px 20px;
+		    background: #fff;
+		    border-radius: 4px;
+		}
+		.info-footer { width: 100%; padding: 15px 0 10px; }
+		.info-footer button { width: 100%; padding: 15px; font-weight: bold; }		
+	</style>
+   
+	<div class="body-container">
+		<div class="body-main">
+
+			<div class="info-continer">
+				<div class="info-title">
+					<h4 style="color: #424951;">[[${title}]]</h4>
+				</div>
+				
+				<div class="info-main">
+					<p>[(${message})]</p>
+				</div>
+				
+				<div class="info-footer">
+					<button type="button" th:onclick="|location.href='@{/}'|" class="btn btn-primary">메인화면으로 이동</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</th:block>
+    
+</html>
