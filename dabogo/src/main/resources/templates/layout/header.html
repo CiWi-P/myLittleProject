@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="header">
+		<div class="header-top">
+			<h1 class="logo"><a th:href="@{/}">SPRING<span>.</span></a></h1>
+			<div>
+				<th:block th:if="${session.member == null}">
+					<a th:href="@{/member/login}">로그인</a>
+						&nbsp;|&nbsp;
+					<a th:href="@{/member/member}">회원가입</a>
+				</th:block>
+				<th:block th:if="${session.member != null}">
+					<span style="color:blue;">[[${session.member.userName}]]</span>님
+						&nbsp;|&nbsp;
+					<a th:href="@{/member/logout}">로그아웃</a>
+						&nbsp;|&nbsp;
+					<a th:href="@{/}">정보수정</a>
+				</th:block>
+			</div>
+		</div>
+		
+		<div class="menu">
+			<nav>
+				<span><a href="#">방명록</a></span>
+				<span><a href="#">게시판</a></span>
+				<span><a href="#">문의사항</a></span>
+				<span><a href="#">공지사항</a></span>
+				<span><a href="#">일정관리</a></span>
+			</nav>
+			<h3>
+				<a href="#"><i class="fas fa-bars"></i></a>
+			</h3>	
+		</div>
+    </div>
+</html>

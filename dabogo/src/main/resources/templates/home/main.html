@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout3}">
+
+<!-- layout3.html의 layout:fragment="css" 영역에 들어감  -->
+<th:block layout:fragment="css">
+	<style type="text/css">
+		.body-main {
+			max-width: 800px;
+		}
+	</style>
+</th:block>
+	
+<!-- layout3.html의 layout:fragment="content" 영역에 들어감  -->
+<th:block layout:fragment="content">
+	<div class="body-container">
+		<div class="body-main">
+			<div style="padding: 5px;">메인 화면 입니다.</div>
+		</div>
+    </div>
+</th:block>
+
+</html>

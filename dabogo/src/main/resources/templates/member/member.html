@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout3}">
+    
+<th:block layout:fragment="content">
+	<div class="body-container">
+		<div class="body-title">
+			<h3><i class="fas fa-chalkboard"></i> 회원가입 </h3>
+		</div>
+		    
+		<div class="body-main">
+		<form name="memberForm" method="Post" th:action="@{/member/member}">
+			
+			<table>
+				<tbody>
+					<tr>
+						<td>아이디</td>
+						<td><input type="text" name="userId" placeholder="아이디" value=""></td>
+					</tr>
+					<tr>
+						<td>비밀번호</td>
+						<td><input type="password" name="password" placeholder="비밀번호" value=""></td>
+					</tr>
+					<tr>
+						<td>비밀번호 확인</td>
+						<td><input type="password" name="password2" placeholder="비밀번호" value=""></td>
+					</tr>
+					<tr>
+						<td>이름</td>
+						<td><input type="text" name="name" placeholder="이름" value=""></td>
+					</tr>
+			
+					
+				</tbody>
+			</table>
+		</form>
+		</div>
+	</div>
+</th:block>
+
+</html>
