@@ -6,7 +6,7 @@
 <th:block layout:fragment="content">
 	 <style type="text/css">
 		.body-main { max-width: 800px; }
-	
+		.table{    margin-bottom: 0px  }
 		.table-form td { padding: 7px 0; }
 		.table-form tr:first-child { border-top: 2px solid #212529;  }
 		.table-form tr td:first-child{ background: #f8f8f8; text-align: center; width: 120px; font-weight: 500; }
@@ -18,96 +18,7 @@
 		.msg-box { text-align: center; color: blue; }
 	</style>
 	
-	<script type="text/javascript">
-		$(function(){
-			$(".help-block").hide();
-			
-			// <input>, <button>, <select>, <textarea> 요소
-			$("form[name=memberForm] :input").css("border", "1px solid #aaa");
-	
-			// <input> 만
-			$("form[name=memberForm] input").focus(function(){
-				$(this).css("border", "1px solid #212529");
-				$(this).siblings(".help-block").show();
-				// next() 는 형제중 span이 하나인 경우는 가능하지만 두개이상에서 두번째는 siblings()를 사용 해야함  
-				// $(this).next("span").show();
-			});
-	
-			$("form[name=memberForm] input").blur(function(){
-				$(this).css("border", "1px solid #aaaaaa");
-				$(this).siblings(".help-block").hide();
-			});
-			
-		});
-	
-		$(function(){
-			// 약관 동의
-			$("form input[name=terms]").click(function(){
-				let c = $(this).is(":checked");
-				if( c ) {
-					$(".btnSendOk").prop("disabled", false);
-				} else {
-					$(".btnSendOk").prop("disabled", true);
-				}
-			});
-		});
-		
-		function sendOk() {
-			const f = document.memberForm;
-			let str;
 
-			str = f.userId.value;
-			if( !/^[a-z][a-z0-9_]{4,9}$/i.test(str) ) { 
-				alert("아이디를 다시 입력 하세요. ");
-				f.userId.focus();
-				return;
-			}
-
-			str = f.userPwd.value;
-			if( !/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str) ) { 
-				alert("패스워드를 다시 입력 하세요. ");
-				f.userPwd.focus();
-				return;
-			}
-
-			if( str !== f.userPwd2.value ) {
-		        alert("패스워드가 일치하지 않습니다. ");
-		        f.userPwd.focus();
-		        return;
-			}
-			
-		    str = f.userName.value;
-		    if( !/^[가-힣]{2,5}$/.test(str) ) {
-		        alert("이름을 다시 입력하세요. ");
-		        f.userName.focus();
-		        return;
-		    }
-
-		    str = f.birth.value;
-		    if( !str ) {
-		        alert("생년월일를 입력하세요. ");
-		        f.birth.focus();
-		        return;
-		    }
-		    
-		    str = f.email.value.trim();
-		    if( !str ) {
-		        alert("이메일을 입력하세요. ");
-		        f.email.focus();
-		        return;
-		    }
-
-		    str = f.email.value.trim();
-		    if( !str ) {
-		        alert("이메일을 입력하세요. ");
-		        f.email.focus();
-		        return;
-		    }
-		    
-		    f.action = "[[@{/member/{mode}(mode=${mode})}]]";
-		    f.submit();
-		}
-	</script>
    
 	<div class="body-container">
 	    <div class="body-title">
@@ -202,6 +113,94 @@
 
 		</div>
 	</div>
+		<script type="text/javascript">
+		$(function(){
+			$(".help-block").hide();
+			
+			// <input>, <button>, <select>, <textarea> 요소
+			$("form[name=memberForm] :input").css("border", "1px solid #aaa");
+	
+			// <input> 만
+			$("form[name=memberForm] input").focus(function(){
+				$(this).css("border", "1px solid #212529");
+				$(this).siblings(".help-block").show();
+				// next() 는 형제중 span이 하나인 경우는 가능하지만 두개이상에서 두번째는 siblings()를 사용 해야함  
+				// $(this).next("span").show();
+			});
+	
+			$("form[name=memberForm] input").blur(function(){
+				$(this).css("border", "1px solid #aaaaaa");
+				$(this).siblings(".help-block").hide();
+			});
+			
+		});
+		const termbox=document.querySelector('form input[name=terms]');
+		const btnSendOk=document.querySelector('form .btnSendOk');
+	    termbox.addEventListener('click',e=>{
+			let c = termbox.checked;
+				if( c ) {
+					btnSendOk.disabled =false;
+				} else {
+					btnSendOk.disabled = true;
+				}
+		})
+		
+		function sendOk() {
+			const f = document.memberForm;
+			let str;
+
+			str = f.userId.value;
+			if( !/^[a-z][a-z0-9_]{4,9}$/i.test(str) ) { 
+				alert("아이디를 다시 입력 하세요. ");
+				f.userId.focus();
+				return;
+			}
+
+			str = f.userPwd.value;
+			if( !/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str) ) { 
+				alert("패스워드를 다시 입력 하세요. ");
+				f.userPwd.focus();
+				return;
+			}
+
+			if( str !== f.userPwd2.value ) {
+		        alert("패스워드가 일치하지 않습니다. ");
+		        f.userPwd.focus();
+		        return;
+			}
+			
+		    str = f.userName.value;
+		    if( !/^[가-힣]{2,5}$/.test(str) ) {
+		        alert("이름을 다시 입력하세요. ");
+		        f.userName.focus();
+		        return;
+		    }
+
+		    str = f.birth.value;
+		    if( !str ) {
+		        alert("생년월일를 입력하세요. ");
+		        f.birth.focus();
+		        return;
+		    }
+		    
+		    str = f.email.value.trim();
+		    if( !str ) {
+		        alert("이메일을 입력하세요. ");
+		        f.email.focus();
+		        return;
+		    }
+
+		    str = f.email.value.trim();
+		    if( !str ) {
+		        alert("이메일을 입력하세요. ");
+		        f.email.focus();
+		        return;
+		    }
+		    
+		    f.action = "[[@{/member/{mode}(mode=${mode})}]]";
+		    f.submit();
+		}
+	</script>
 </th:block>
     
 </html>

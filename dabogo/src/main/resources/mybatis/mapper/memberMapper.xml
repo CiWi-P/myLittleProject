@@ -5,15 +5,15 @@
 	<!-- 회원정보 추가  -->
 	<insert id="insertMember" parameterType="com.sp.dabogo.domain.Member">
 		INSERT INTO member (userId, userName, userPwd, email, tel, birth, enabled,  failure_cnt, register_date, modify_date)
-		VALUES (#{userId}, #{userName}, #{userPwd}, #{email}, #{tel}, #{birth}, 1, 0, SYSDATE, SYSDATE)
+		VALUES (#{userId}, #{userName}, #{userPwd}, #{email}, #{tel}, #{birth}, 1, 0, now(), now())
 	</insert>
 
 	<!-- 회원 정보 가져오기 -->
 	<select id="findById" parameterType="String" resultType="com.sp.dabogo.domain.Member">
 		SELECT userId, userName, userPwd, 
 			register_date, modify_date, last_login,
-			NVL(enabled, 0) enabled, email, tel, 
-			TO_CHAR(birth, 'YYYY-MM-DD') birth, failure_cnt
+			ifnull(enabled, 0) enabled, email, tel, 
+			DATE_FORMAT(birth, '%Y%m%d') birth, failure_cnt
 		FROM member
 		WHERE userId = #{userId} 
 	</select>
@@ -22,12 +22,12 @@
 	<update id="updateMember" parameterType="com.sp.dabogo.domain.Member">
 		UPDATE member SET userPwd=#{userPwd}, 
 			email=#{email}, tel=#{tel}, birth=#{birth},
-			modify_date=SYSDATE 
+			modify_date=now() 
 		WHERE userId=#{userId}
 	</update>
 
 	<update id="updateLastLogin" parameterType="String">
-		UPDATE member SET last_login=SYSDATE 
+		UPDATE member SET last_login=now() 
 		WHERE userId=#{userId}
 	</update>
     

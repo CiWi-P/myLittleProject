@@ -51,25 +51,11 @@ public class SpringSecurityConfig {
     			"/member/userIdCheck", "/member/complete", "/member/pwdFind", "/member/expired",
     			"/dist/**", "/uploads/photo/**"};
     	
-    	// configure HTTP security
-    	// Spring Security 6.1.0부터는 메서드 체이닝의 사용을 지양하고 
-    	//     람다식을 통해 함수형으로 설정하게 지향하고 있다.
     	http.cors(Customizer.withDefaults())
     		.csrf(AbstractHttpConfigurer::disable)
     		.headers(headers -> headers
     			.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
     	
-    	/*
-    	  ※ 설명
-    	   - authorizeHttpRequests()
-    	    : 스프링 시큐리티의 구성 메서드 내에서 사용되는 메서드로, HTTP 요청에 대한 인가 설정을 구성하는 데 사용
-    	    : 다양한 인가 규칙을 정의할 수 있으며, 경로별로 다른 권한 설정이 가능하다.
-    	    
-    	   - requestMatchers()
-    	     : authorizeHttpRequests()와 함께 사용되어 특정한 HTTP 요청 매처(Request Matcher)를 적용할 수 있게 해준다.
-    	     : 요청의 종류는 HTTP 메서드(GET, POST 등)나 서블릿 경로를 기반으로 지정할 수 있다.
-    	       requestMatchers(HttpMethod.GET,  "/public/**") 처럼 HTTP GET 요청 중 "/public/"으로 시작하는 URL에 대한 보안 설정  
-    	*/    	
         http
         	.authorizeHttpRequests( authorize ->  authorize
         		.requestMatchers(excludeUri).permitAll()
@@ -103,16 +89,6 @@ public class SpringSecurityConfig {
         return http.build();
     }
     
-    /*
-    @Bean
-    WebSecurityCustomizer webSecurityCustomizer() {
-    	// 정적 리소스를 시큐리티 적용되지 않도록 설정
-    	// 이곳에서 시큐리티 적용되지 않도록 설정하면 .requestMatchers(excludeUri).permitAll() 가 적용되지 않음
-    	// String[] excludeUri = {"/dist/**", "/uploads/photo/**"};
-        // return (web) -> web.ignoring().requestMatchers(excludeUri);
-    	return (web) -> web.ignoring().requestMatchers("/dist/**", "/uploads/photo/**");
-    }
-    */
     
     @Bean
     PasswordEncoder passwordEncoder() {
